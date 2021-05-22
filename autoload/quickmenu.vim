@@ -128,6 +128,16 @@ function! quickmenu#reset()
 	let s:quickmenu_cursor[s:quickmenu_mid] = 0
 endfunc
 
+function! quickmenu#bookmark(path)
+  let cmd = 'cd ' . a:path
+  let comment = 'Go to the ' . a:path
+  if exists('NERDTree')
+    let cmd .= ' | NERDTree'
+    let comment .= ' and open the NERDTree'
+  endif
+  call quickmenu#append(a:path, cmd, comment)
+endfunction 
+
 function! quickmenu#append(text, event, ...)
 	let help = (a:0 >= 1)? a:1 : ''
 	let filetype = (a:0 >= 2)? a:2 : ''
