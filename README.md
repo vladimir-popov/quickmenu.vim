@@ -4,29 +4,13 @@
  [skywind3000/quickmenu.vim](https://github.com/skywind3000/quickmenu.vim).  
  I use this just for fun and experiments.
 
-## Preface
-
-There are many keymaps defined in my `.vimrc`. Getting tired to check my
-`.vimrc` again and again when I forget some, so I made this `quickmenu` plugin
-which can be fully customized:
-
-- Well formatted and carefully colored to ensure neat and handy.
-- Press `<F12>` to popup `quickmenu` on the right, use `j` and `k` to move up
-  and down.
-- Press `<Enter>` or `1` to `9` to select an item.
-- `Help` details will display in the cmdline when you are moving the cursor
-  around.
-- Items can be filtered by `filetype`, different items for different filetypes.
-- Scripts in the `%{...}` form from `text` and `help` will be evaluated and
-  expanded.
-- No longer have to be afraid for forgetting keymaps.
-
 ## Install
 
 Copy `autoload/quickmenu.vim` and `syntax/quickmenu.vim` to your
-`~/.vim/autoload` and `~/.vim/syntax`.  or use
-[vim-plug](https://github.com/junegunn/vim-plug) to install it just add this
-line to your plugins section: `Plug 'vladimir-popov/quickmenu.vim'`. 
+`~/.vim/autoload` and `~/.vim/syntax`.  
+
+Or use [vim-plug](https://github.com/junegunn/vim-plug) to install it just add
+this line to your plugins section: `Plug 'vladimir-popov/quickmenu.vim'`. 
 
 ## Configuration
 
@@ -35,8 +19,7 @@ Add these lines to your `.vimrc` (outside of the plugins section in case of
 
 ```VimL 
 " choose a favorite key to show/hide quickmenu 
-noremap <silent><F12>
-                \ :call quickmenu#toggle(0)<cr>
+noremap <silent><F12> :call quickmenu#toggle(0)<cr>
 
 " enable cursorline (L) and cmdline help (H) 
 let g:quickmenu_options = "HL" 
