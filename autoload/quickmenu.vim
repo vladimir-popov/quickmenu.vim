@@ -3,7 +3,7 @@
 " quickmenu.vim - 
 "
 " Created by skywind on 2017/07/08
-" Last change: 2017/08/08 15:20:20
+" Edited by vladimir-popov since 2021/05/22
 "
 "======================================================================
 
@@ -300,6 +300,7 @@ function! s:setup_keymaps(items)
 		let ln += 1
 	endfor
 	noremap <silent> <buffer> 0 :call <SID>quickmenu_close()<cr>
+	noremap <silent> <buffer> <esc> :call <SID>quickmenu_close()<cr>
 	noremap <silent> <buffer> q :call <SID>quickmenu_close()<cr>
 	noremap <silent> <buffer> <CR> :call <SID>quickmenu_enter()<cr>
 	let s:quickmenu_line = 0
@@ -808,7 +809,7 @@ endfunc
 "----------------------------------------------------------------------
 " New functions
 "----------------------------------------------------------------------
-function! quickmenu#bookmark(path)
+function! quickmenu#bookmark(path, ...)
   if empty(glob(a:path))
     echo 'File not found'
     return
@@ -817,24 +818,31 @@ function! quickmenu#bookmark(path)
   if filereadable(expand(a:path))
     let cmd = 'e ' . a:path
     let comment = 'Open the file ' . a:path . ' to edit'
-    call quickmenu#append(a:path, cmd, comment)
   else
     let cmd = 'cd ' . a:path
     let comment = 'Go to the ' . a:path
-    if exists('*nerdtree#echo')
-      let cmd .= ' | NERDTree'
-      let comment .= ' and open the NERDTree'
-    endif
-    call quickmenu#append(a:path, cmd, comment)
   endif
+
+  if a:0 > 0
+    let cmd .= ' | ' . a:1
+  endif
+  if a:0 > 1
+    let comment .= ' and ' . a:2
+  endif
+
+  call quickmenu#append(a:path, cmd, comment)
 endfunction 
 
 
 "----------------------------------------------------------------------
 " testing case
 "----------------------------------------------------------------------
-if 1
+if 0
 	call quickmenu#reset()
+
+  call quickmenu#bookmark('~/')
+  call quickmenu#bookmark('~/', 'NERDTred', 'show the NERDTree')
+
 	call quickmenu#append('# Start', '')
 	call quickmenu#append('test1', 'echo 1', 'help 1')
 	call quickmenu#append('test2', 'echo 2', 'help 2')
@@ -845,8 +853,6 @@ if 1
 	call quickmenu#append("test5\nasdfafffff\njkjkj", 'echo 5')
 	call quickmenu#append('text1', '')
 	call quickmenu#append('text2', '')
-
-  call quickmenu#bookmark('~/')
 
 	" nnoremap <F12> :call quickmenu#toggle(0)<cr>
 	" imap <expr> <F11> quickmenu#bottom(0)

@@ -76,10 +76,12 @@ A item will be treated as "static text" (unselectable) If `action` is empty.
 You can add a bookmark to the menu. To do so, use the function:
 
 ```VimL 
-function quickmenu#bookmark(path) 
+function quickmenu#bookmark(path[, hook, comment]) 
 ```
 
 - `path` if this is a path to a file, then it file will be opened;
          if this is a path to the directory, then this path will be set as the
-         working directory. Optionally, the `NERDTree` window can be opened if
-         a corresponding plugin has been installed.
+         working directory.
+- `hook` is an optional piece of vimscript to be executed after going to the
+         `path`.
+- `comment` will be added to the help.
