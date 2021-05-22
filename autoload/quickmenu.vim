@@ -821,7 +821,7 @@ function! quickmenu#bookmark(path)
   else
     let cmd = 'cd ' . a:path
     let comment = 'Go to the ' . a:path
-    if exists('NERDTree')
+    if exists('*nerdtree#echo')
       let cmd .= ' | NERDTree'
       let comment .= ' and open the NERDTree'
     endif
@@ -833,7 +833,7 @@ endfunction
 "----------------------------------------------------------------------
 " testing case
 "----------------------------------------------------------------------
-if 0
+if 1
 	call quickmenu#reset()
 	call quickmenu#append('# Start', '')
 	call quickmenu#append('test1', 'echo 1', 'help 1')
@@ -846,8 +846,10 @@ if 0
 	call quickmenu#append('text1', '')
 	call quickmenu#append('text2', '')
 
+  call quickmenu#bookmark('~/')
+
 	" nnoremap <F12> :call quickmenu#toggle(0)<cr>
-	imap <expr> <F11> quickmenu#bottom(0)
+	" imap <expr> <F11> quickmenu#bottom(0)
 endif
 
 
