@@ -128,16 +128,6 @@ function! quickmenu#reset()
 	let s:quickmenu_cursor[s:quickmenu_mid] = 0
 endfunc
 
-function! quickmenu#bookmark(path)
-  let cmd = 'cd ' . a:path
-  let comment = 'Go to the ' . a:path
-  if exists('NERDTree')
-    let cmd .= ' | NERDTree'
-    let comment .= ' and open the NERDTree'
-  endif
-  call quickmenu#append(a:path, cmd, comment)
-endfunction 
-
 function! quickmenu#append(text, event, ...)
 	let help = (a:0 >= 1)? a:1 : ''
 	let filetype = (a:0 >= 2)? a:2 : ''
@@ -813,6 +803,31 @@ function! s:bottom_popup(items, header)
 
 	return c
 endfunc
+
+
+"----------------------------------------------------------------------
+" New functions
+"----------------------------------------------------------------------
+function! quickmenu#bookmark(path)
+  if empty(glob(a:path))
+    echo 'File not found'
+    return
+  endif
+
+  if filereadable(expand(a:path))
+    let cmd = 'e ' . a:path
+    let comment = 'Open the file ' . a:path . ' to edit'
+    call quickmenu#append(a:path, cmd, comment)
+  else
+    let cmd = 'cd ' . a:path
+    let comment = 'Go to the ' . a:path
+    if exists('NERDTree')
+      let cmd .= ' | NERDTree'
+      let comment .= ' and open the NERDTree'
+    endif
+    call quickmenu#append(a:path, cmd, comment)
+  endif
+endfunction 
 
 
 "----------------------------------------------------------------------
